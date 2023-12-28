@@ -1,24 +1,25 @@
-
-
-use esp_idf_svc::{hal::{peripheral::Peripheral, peripherals::Peripherals}, 
+use esp_idf_svc::{
+    hal::{peripheral::Peripheral, peripherals::Peripherals}, 
     eventloop::EspSystemEventLoop, 
     nvs::{EspNvsPartition, NvsDefault, EspDefaultNvsPartition}, 
     wifi::{EspWifi, AsyncWifi, Configuration, AuthMethod, ClientConfiguration, self},
-    timer::{Task, EspTimerService, EspTaskTimerService}, ping::EspPing};
-
-
+    timer::{Task, EspTimerService, EspTaskTimerService},
+    ping::EspPing, http::{server::EspHttpServer, client::Request}
+};
+use std::{
+    thread::sleep,
+    time::Duration
+};
 
 const SSID: &str = "UNRESOLVED_ENV_VAR";
 const PASS: &str = "UNRESOLVED_ENV_VAR";
-
-
 
 
 fn main() {
     // It is necessary to call this function once. Otherwise some patches to the runtime
     // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
     esp_idf_svc::sys::link_patches();
-
+    
     // Bind the log crate to the ESP Logging facilities
     esp_idf_svc::log::EspLogger::initialize_default();
 
@@ -33,9 +34,21 @@ fn main() {
         Some(EspDefaultNvsPartition::take().unwrap()),
         timer_service,
     );
+
+    let mut server = EspHttpServer::new(&Default::default()).expect("Failed to create HTTP server");
+
+    server.fn_handler("/", esp_idf_svc::http::Method::Get, |req| {
+            Ok({
+                let mut response = req.into_ok_response().expect("Failed to create response");
+                response.write("hi princess".as_bytes()).expect("Failed to set body");
+            })
+        }).expect("Failed to register handler");
+
+
+    loop {
+        sleep(Duration::from_secs(1));
+    }
 }
-
-
 
 
 pub async fn wifi(

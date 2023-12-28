@@ -13,6 +13,11 @@ opt-level = "s"
 debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
+[[bin]]
+edition = "2018"
+name = "whatever_name_for_binary"
+path = "src/main.rs"
+
 [features]
 default = ["std", "embassy", "esp-idf-svc/native"]
 
@@ -29,5 +34,10 @@ esp-idf-svc = { version = "0.47.3", default-features = false }
 anyhow = "1.0.76"
 futures = "0.3.30"
 
+
 [build-dependencies]
 embuild = "0.31.3"
+
+[package.crates-io]
+esp-idf-svc = {github = "http://github.com/esp-rs/esp-idf-svc"}
+
