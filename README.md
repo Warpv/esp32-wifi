@@ -6,6 +6,21 @@ download the project:
 ```sh
 git clone https://github.com/nikoincc/esp32-wifi.git
 ```
+build prijecr:
+```sh
+cd <your-path-to-project>
+cargo build
+```
+## After buildin is done you can flash to esp32
+1) connect your board
+
+2) run:
+```sh
+espflash flash --monitor -- --release
+```
+
+
+
 
 
 
