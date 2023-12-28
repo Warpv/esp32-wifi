@@ -6,6 +6,9 @@ download the project:
 ```sh
 git clone https://github.com/nikoincc/esp32-wifi.git
 ```
+
+# Flash build to esp 32
+
 build prijecr:
 ```sh
 cd <your-path-to-project>
@@ -18,14 +21,6 @@ cargo build
 ```sh
 espflash flash --monitor -- --release
 ```
-
-
-
-
-
-
-# Flash build to esp 32
-
 
 
 ## Prerequisites
