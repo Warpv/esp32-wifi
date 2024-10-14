@@ -11,8 +11,8 @@ use std::{
     time::Duration
 };
 
-const SSID: &str = "UNRESOLVED_ENV_VAR";
-const PASS: &str = "UNRESOLVED_ENV_VAR";
+const SSID: &str = "YORE_SSID";
+const PASS: &str = "YORE_PASS";
 
 
 fn main() {
